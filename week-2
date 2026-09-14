@@ -1,0 +1,63 @@
+class Student{
+    String name;
+    int grade;
+
+    //parameterized constructor
+    Student(String name,int grade) {
+        this.name = name;
+        this.grade = grade;
+    }
+/* The this keyword refers to the current object, so this.name and this.grade initialize
+the object's instance variables.
+ */
+
+    // Copy constructor
+    
+    Student(Student s1) {
+        this.name = s1.name;
+        this.grade = s1.grade;
+    }
+
+        //display
+        
+        void display(){
+            System.out.println("Student Name:"+ name+ " and his grade is: "+grade);
+        }
+
+
+}
+public class week2 {
+    public static void main(String[] args) {
+        Student st=new Student("Ali",4);
+        st.display();
+
+//copy constructor print
+        Student st2 = new Student(st);
+        st2.display();
+
+
+    }
+
+}
+
+//PART B
+
+class Pen{
+    //private constructor
+    private Pen(){
+        System.out.println("Private constructor called");
+    }
+    public static void displayMessage(){
+        System.out.println("This pen is in blue color");
+    }
+}
+class partb {
+    public static void main(String[] args) {
+        //Pen p=new Pen();
+//error bcz constructor is private
+
+        Pen.displayMessage();
+
+    }
+}
+//PARTB
