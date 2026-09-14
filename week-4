@@ -1,0 +1,233 @@
+//MAIN CLASS
+
+public class Main {
+    public static void main(String[] args) {
+
+        Vector v1 = new Vector(3, 4, 5);
+
+        System.out.println("Original Vector:");
+        System.out.println(v1);
+
+        // Set XYZ
+//        v1.setXYZ(10, 20, 30);
+//
+//        System.out.println("After setXYZ:");
+//        System.out.println(v1);
+
+        // Another vector
+        Vector v2 = new Vector(1, 2, 3);
+
+        // Addition of two vectors
+        Vector v3 = v1.add(v2);
+
+        System.out.println("Addition of vectors:");
+        System.out.println(v3);
+
+        // Addition using x, y, z values
+        Vector v4 = v1.add(10, 20, 30);
+
+        System.out.println("Addition with XYZ:");
+        System.out.println(v4);
+
+        // Subtraction of vectors
+        Vector v5 = v1.subtract(v2);
+
+        System.out.println("Subtraction:");
+        System.out.println(v5);
+
+        // Copy constructor
+        Vector v6 = new Vector(v1);
+
+        System.out.println("Copied Vector:");
+        System.out.println(v6);
+
+
+
+        Point p1 = new Point(3, 5);
+        Point p2 = new Point(9, 8);
+
+        Vector v7 = p2.subtract(p1);
+
+        System.out.println("Point 1:");
+        System.out.println(p1);
+
+        System.out.println("Point 2:");
+        System.out.println(p2);
+
+        System.out.println("Vector p2 - p1:");
+        System.out.println(v7);
+    }
+}
+
+
+//VECTOR CLASS
+
+public class Vector {
+    private double x;
+    private double y;
+    private double z;
+
+    // Default constructor
+    Vector() {
+        x = 0;
+        y = 0;
+        z = 0;
+    }
+
+    // Parameterized constructor
+    Vector(double x, double y, double z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+
+    // Copy constructor
+    Vector(Vector v) {
+        this.x = v.x;
+        this.y = v.y;
+        this.z = v.z;
+    }
+
+    // Getters
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public double getZ() {
+        return z;
+    }
+
+    // Setters
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
+
+    public void setZ(double z) {
+        this.z = z;
+    }
+
+    // Set XYZ
+//    public void setXYZ(double x, double y, double z) {
+//        this.x = x;
+//        this.y = y;
+//        this.z = z;
+//    }
+
+    // Vector addition
+    public Vector add(Vector v) {
+        return new Vector(
+                this.x + v.x,
+                this.y + v.y,
+                this.z + v.z
+        );
+    }
+    //overload
+    public Vector add(double x, double y, double z) {
+        return new Vector(
+                this.x + x,
+                this.y + y,
+                this.z + z
+        );
+    }
+
+    // Vector subtraction
+    public Vector subtract(Vector v) {
+        return new Vector(
+                this.x - v.x,
+                this.y - v.y,
+                this.z - v.z
+        );
+    }
+
+    // Display
+    public void display() {
+
+        System.out.println("(" + x + ", " + y + ", " + z + ")");
+    }
+
+    // toString
+    @Override
+    public String toString() {
+
+        return "(" + x + ", " + y + ", " + z + ")";
+    }
+
+}
+
+
+//POINT.JAVA
+
+public class Point {
+    private double x;
+    private double y;
+
+    // Default constructor
+    Point() {
+        x = 0;
+        y = 0;
+    }
+
+    // Parameterized constructor
+    Point(double x, double y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    // Copy constructor
+    Point(Point p) {
+        this.x = p.x;
+        this.y = p.y;
+    }
+
+    // Getters
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    // Setters
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
+
+    // Set both X and Y
+//    public void setXY(double x, double y) {
+//        this.x = x;
+//        this.y = y;
+//    }
+    // p2 - p1
+    public Vector subtract(Point p) {
+        return new Vector(
+                this.x - p.x,
+                this.y - p.y,
+                0
+        );
+    }
+
+    // Display
+    public void display() {
+        System.out.println("(" + x + ", " + y + ")");
+    }
+
+    // toString
+    @Override
+    public String toString() {
+        return "(" + x + ", " + y + ")";
+    }
+
+//VECTOR CLASS
