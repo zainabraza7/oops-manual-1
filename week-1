@@ -1,0 +1,17 @@
+class Car{
+    String name;
+    int model;
+}
+
+public class week1 {
+    //default constructor
+    public static void main(String[] args) {
+        Car c1=new Car();
+        System.out.println(c1.name);
+        System.out.println(c1.model);
+
+
+    }
+
+
+}
