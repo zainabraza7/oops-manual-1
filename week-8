@@ -1,0 +1,113 @@
+//OVERLOADING
+//RATIONAL NUM
+final class RationalNumber {
+
+    private final int numerator;
+    private final int denominator;
+
+    public RationalNumber(int numerator, int denominator) {
+/*we can't divide any num by 0 it will throw error
+IllegalArgumentException means invalid value
+ */
+
+        if (denominator == 0) {
+            throw new IllegalArgumentException("Denominator must not be zero.");
+        }
+
+        this.numerator = numerator;//this.num is obj and num is parameter
+        this.denominator = denominator;
+    }
+
+    public boolean equals(RationalNumber other) {
+
+        return other != null &&
+                this.numerator == other.numerator && //this.num is r1 and other.num is r2
+                this.denominator == other.denominator;
+    }
+}
+
+//MAIN 1 CLASS
+
+public class main1 {
+    public static void main(String[] args) {
+
+        RationalNumber r1 = new RationalNumber(10, 5);
+        RationalNumber r2 = new RationalNumber(10, 5);
+
+        Object o1 = r1;
+        Object o2 = r2;
+
+        System.out.println("r1.equals(r2) = " + r1.equals(r2));
+        System.out.println("o1.equals(o2) = " + o1.equals(o2));
+        System.out.println("r1.equals(o2) = " + r1.equals(o2));
+        System.out.println("o1.equals(r2) = " + o1.equals(r2));
+        System.out.println("r1.equals(o1) = " + r1.equals(o1));
+    }
+}
+
+//OVERRIDING
+
+import java.util.Objects;
+
+final class RationalNum {
+
+    private final int numerator;
+    private final int denominator;
+
+    public RationalNum(int numerator, int denominator) {
+
+        if (denominator <= 0) {
+            throw new IllegalArgumentException(
+                    "Denominator must be greater than zero."
+            );
+        }
+
+        this.numerator = numerator;
+        this.denominator = denominator;
+    }
+
+    @Override
+    public boolean equals(Object other) { //
+        //give me a diff obj i will tell if its equal to my obj
+        if (this == other) { //this is current obj
+            return true;
+        }
+
+        if (other == null) {
+            return false;
+        }
+
+        if (!(other instanceof RationalNum)) { //it checks if other is the rational num obj
+            return false;
+        }
+
+        RationalNum that = (RationalNum) other;
+//here (RationalNum) is explicit or narrowing casting
+        return this.numerator == that.numerator
+                && this.denominator == that.denominator;
+    }
+//hashcode generates a num based on obj value
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.numerator, this.denominator);
+    }
+}
+
+//MAIN 2 CLASS
+
+public class main2 {
+    public static void main(String[] args) {
+
+        RationalNum r1 = new RationalNum(10, 5);
+        RationalNum r2 = new RationalNum(10, 5);
+        RationalNum r3 = new RationalNum(10, 6);
+
+        System.out.println("r1.equals(r2) = " + r1.equals(r2));
+        System.out.println("r1.equals(r3) = " + r1.equals(r3));
+
+        System.out.println("r1.hashCode() = " + r1.hashCode());
+        System.out.println("r2.hashCode() = " + r2.hashCode());
+        System.out.println("r3.hashCode() = " + r3.hashCode());
+    }
+}
+
