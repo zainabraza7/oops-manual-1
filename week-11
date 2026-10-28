@@ -1,0 +1,189 @@
+Main.java
+import java.util.Random;
+
+public class Main {
+
+    public static void main(String[] args)
+            throws CloneNotSupportedException {
+
+        Random random = new Random();
+
+        Point[] data = new Point[100];
+
+        // Create 100 Point objects
+        for (int i = 0; i < data.length; i++) {
+
+            int x = random.nextInt(1, 101);
+            int y = random.nextInt(1, 101);
+
+            data[i] = new Point(x, y);
+        }
+
+        PointArray original = new PointArray(data);
+
+        PointArray shallow = original.clone();
+
+        PointArray deep = original.deepCopy();
+
+        shallow.getPoint(0).setX(999);
+
+        System.out.println(
+                "Shallow shares data: "
+                        + (original.getPoint(0).getX() == 999));
+
+        deep.getPoint(1).setY(888);
+
+        System.out.println(
+                "Deep is independent: "
+                        + (original.getPoint(1).getY() != 888));
+
+        Point p = new Point(10, 20);
+
+        Point q = new Point(10, 20);
+
+        System.out.println(
+                "Logical equality: " + p.equals(q));
+
+       // Point p1 = new Point(10, 20);
+        System.out.println(p.toString());
+        System.out.println(q.toString());
+
+    }
+}
+Point.java
+public class Point {
+    private int x;
+    private int y;
+
+    // Parameterized constructor
+    public Point(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    // Copy constructor
+    public Point(Point other) {
+        this.x = other.x;
+        this.y = other.y;
+    }
+
+    // Getter
+    public int getX() {
+        return this.x;
+    }
+
+    // Getter
+    public int getY() {
+        return this.y;
+    }
+
+    // Setter
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    // Setter
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    // Equals
+    @Override
+    public boolean equals(Object other) { //object use kra built in hota
+
+        if (other == null) {
+            return false;
+        }
+//jo derhe hai wo point hai bhi ya nhi ar nhi hai jese agr string hai tou false den
+        if (!(other instanceof Point)) {
+            return false;
+        }
+//explicit type casting
+        Point p = (Point) other;
+
+        return this.x == p.x && this.y == p.y;
+    }
+
+    // HashCode,agr equal hai dono tou hashcode bhi dono ka same hoga
+    @Override
+    public int hashCode() {
+
+        return x+y;
+    }
+
+    // ToString
+    @Override
+    public String toString() {
+        return "Point(" + x + ", " + y + ")";
+    }
+}
+PointArray.java
+import java.util.Arrays;
+
+public class PointArray implements Cloneable {
+
+    private Point[] points;
+
+    // Constructor
+    public PointArray(Point[] points) {
+
+        this.points = points;
+    }
+
+    // Get Point
+    public Point getPoint(int index) {
+
+        return this.points[index];
+    }
+
+    // Shallow copy
+    @Override
+    public PointArray clone() throws CloneNotSupportedException {
+
+        return (PointArray) super.clone(); //super parent class hai
+    }
+
+    // Deep copy
+    public PointArray deepCopy() throws CloneNotSupportedException {
+
+        PointArray copy = (PointArray) super.clone();
+
+/* super.clone() copy banata hai, new Point[] naya array banata hai, aur new Point(...)
+ har Point ka naya object banata hai
+ */
+
+        // Create a new Point array
+        copy.points = new Point[this.points.length];
+
+        // Create new Point objects
+        for (int i = 0; i < this.points.length; i++) {
+
+            copy.points[i] = new Point(this.points[i]);
+        }
+
+        return copy;
+
+
+    }
+
+    // ToString
+//    @Override
+//    public String toString(){
+//        String info = "";
+//        for (int i = 0; i < this.points.length; i++) {
+//            info += this.points[i] + " ";   // yahan Point.toString() khud bulta hai
+//        }
+//        return info;
+//    }
+
+    @Override
+    public String toString(){
+        String info=" ";
+        info+="Point"+Arrays.toString(this.points);
+        return info;
+
+    }
+}
+
+
+POINT.java
