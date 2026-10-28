@@ -1,0 +1,191 @@
+Main.java
+public class main1 {
+
+    public static void main(String[] args) {
+
+
+        Player player = new Player("Sara", 2, 6);
+
+        // Sara ke dono dice roll honge.
+        // Dono dice ke results print honge aur total calculate hoga.
+        player.roll();
+
+        // getTotal() current total return karega.
+        // Ye line initial total screen par print karegi.
+        System.out.println("Initial total: " + player.getTotal());
+
+        // index 1 ka matlab doosra dice, kyun ke array index 0 se shuru hota hai.
+        // Sirf doosra dice dobara roll hoga.
+        // Pehle dice ka purana result same rahega.
+        player.rollAgain(1);
+
+        // Dobara roll ke baad updated total print hoga.
+        System.out.println("New total: " + player.getTotal());
+
+        String info = player.toString();
+        System.out.println(info);
+    }
+
+}
+Dice.java
+public class Dice {
+    // Attribute: ye store karega ke is dice ki kitni sides hain.
+    // Example: agar sides = 6 hai, toh dice par 1 se 6 tak numbers aa sakte hain.
+    private int sides;
+
+    // Constructor: jab hum new Dice(6) likhenge, ye constructor chalega.
+    // Parameter 'sides' mein hum dice ki sides ki quantity bhejte hain.
+    public Dice(int sides) {
+
+
+        this.sides = sides;
+    }
+
+    // Ye method dice ko roll karta hai aur ek random integer return karta hai.
+    // Return type int hai, kyun ke humein whole number chahiye.
+    public int roll() {
+
+        // Math.random() 0.0 se lekar 1.0 se chhoti value deta hai.
+        // Math.random() * sides se value 0 se sides se chhoti range mein aati hai.
+        // (int) decimal part hata kar integer banata hai.
+        // + 1 karne se result 1 se sides tak ho jata hai.
+        // Example: sides = 6 ho, toh result 1, 2, 3, 4, 5, ya 6 ho sakta hai.
+        return (int) (Math.random() * sides) + 1;
+    }
+
+    // Ye method dice ki sides ki quantity return karta hai.
+    // Example: agar sides = 6 hai, toh getSides() 6 return karega.
+    public int getSides() {
+        return sides;
+    }
+    // Har Dice object ki information String mein return karta hai.
+    @Override
+    public String toString() {
+        return "Sides: " + this.sides;
+    }
+}
+Player.java
+import java.util.Arrays;
+public class Player {
+
+    // Player ka naam store hoga, jaise "Sara".
+    private String name;
+
+    // Dice objects ki array hai.
+    // Agar player ke paas 2 dice hain, toh is array mein 2 Dice objects honge.
+    private Dice[] dice;
+
+    // Saare dice ke numbers ka sum is variable mein store hoga.
+    private int total;
+
+    // Har dice ka latest rolled number is array mein save hoga.
+    // Example: agar pehle dice par 4 aur doosre par 2 aaye,
+    // toh values array [4, 2] hogi.
+    // Isse rollAgain() ke waqt doosre dice ko change kar sakte hain,
+    // jabke pehle dice ka number same rehta hai.
+    private int[] values;
+
+
+    // Constructor: player banate waqt naam, dice ki quantity,
+    // aur har dice ki sides ki quantity deni hoti hai.
+    // Example: new Player("Sara", 2, 6)
+    // Sara ka naam, 2 dice, aur har dice ki 6 sides.
+    public Player(String name, int count, int sides) {
+
+        // Constructor ke parameter name ko player ke attribute mein save karo.
+        this.name = name;
+
+        // count jitni spaces wali Dice array banao.
+        // Agar count = 2 hai, toh dice[0] aur dice[1] honge.
+        // Abhi array ke andar Dice objects nahi banay hain.
+        dice = new Dice[count];
+
+        // Har dice ka result save karne ke liye int array banao.
+        // Is array ka size bhi dice ki quantity jitna hoga.
+        values = new int[count];
+
+        // Loop har dice ke liye chalega.
+        // i = 0 se shuru hoga aur i count se chhota rehne tak chalega.
+        for (int i = 0; i < count; i++) {
+
+            // Har array slot mein ek naya Dice object banao.
+            // Har Dice object ko sides ki quantity di ja rahi hai.
+            // Example: count = 2 aur sides = 6 ho,
+            // toh dice[0] = new Dice(6) aur dice[1] = new Dice(6).
+            dice[i] = new Dice(sides);
+        }
+    }
+
+    public void roll() {
+
+        // Har dafa saare dice roll karne se pehle total ko zero karo.
+        // Isse purane roll ka total naye total mein add nahi hoga.
+        total = 0;
+
+        // dice.length batata hai ke array mein kitne slots hain.
+        // Example: 2 dice hon toh loop 2 baar chalega.
+        for (int i = 0; i < dice.length; i++) {
+
+            // i th dice ko roll karo.
+            // roll() ek random number return karta hai.
+            // Woh number values[i] mein save ho jayega.
+            values[i] = dice[i].roll();
+
+            // Jo number aaya hai, usko total mein add karo.
+            total = total + values[i];
+
+            // Dice ka result screen par print karo.
+            // i + 1 isliye likha hai kyun ke array 0 se shuru hoti hai,
+            // lekin hum display mein Dice 1 aur Dice 2 dikhana chahte hain.
+            System.out.println("Die " + (i + 1) + " = " + values[i]);
+        }
+    }
+
+
+//Ye method current total score return karta hai int ka matlab returned value ek integer hogi
+
+    public int getTotal() {
+
+        // Abhi tak calculate hua total caller ko wapas do.
+        return total;
+    }
+
+
+    // Ye method sirf ek selected dice ko dobara roll karta hai.
+    // index batata hai ke kaunsa dice dobara roll karna hai.
+    // index = 0 means pehla dice.
+    // index = 1 means doosra dice.
+    public void rollAgain(int index) {
+
+        // Sirf selected dice ko dobara roll karo.
+        // Uska naya number values[index] mein save karo.
+        // Baaki dice ke numbers change nahi honge.
+        values[index] = dice[index].roll();
+
+        // Total ko zero se dobara calculate karna shuru karo.
+        total = 0;
+
+        // values array ke saare numbers par loop chalao,
+        // taake naye number ke saath complete total calculate ho.
+        for (int i = 0; i < values.length; i++) {
+
+            // Har dice ka latest number total mein add karo.
+            total = total + values[i];
+        }
+
+        // Sirf us dice ka naya result print karo jo dobara roll hua.
+        System.out.println("Die " + (index + 1) + " = " + values[index]);
+    }
+    @Override
+    public String toString() {
+
+        String info = " ";
+
+        info += "Player: " + this.name +
+                "\nTotal: " + this.total +
+                "\nDice Array: " +Arrays.toString(this.dice);
+
+        return info;
+    }
+}
+
